@@ -1,0 +1,54 @@
+<div class="col-lg-12">
+    <h1 id="page_header" class="page-header"></h1>
+</div>
+
+<div id="body_wrapper">
+	<div id="xls_toolbar">
+		<button type="button" id="btn_download_xls" access-action="xls" class="btn btn-way">Download XLS</button>
+		<button type="button" id="btn_download_xls_all" access-action="xls" class="btn btn-way">Download XLS Completo</button>
+	</div>
+
+	<div id="page_body" class="col-lg-12">
+
+		<table id="participantes_table"
+			data-unique-id="id_cupom"
+			data-toolbar="#xls_toolbar"
+			>
+			<thead>
+				<tr>
+					<!-- <th data-radio="true"></th> -->
+					<th data-sortable="true" data-field="ds_nome">Nome</th>
+					<th data-sortable="true" data-field="ds_email">E-mail</th>
+					<th data-sortable="true" data-formatter="UserTreat.phone" data-field="ds_telefone">Telefone</th>
+					<th data-sortable="true" data-width="200" data-formatter="UserTreat.datetime" data-field="dt_cadastro">Cadastro</th>
+					<th data-sortable="true" data-field="ds_endereco">Endereço</th>
+					<th data-sortable="true" data-field="ds_cidade">Cidade</th>
+					<th data-sortable="true" data-field="ds_uf">UF</th>
+					<th data-sortable="true" data-formatter="UserTreat.cpf" data-field="ds_cpf">CPF</th>
+					<th data-sortable="true" data-formatter="UserTreat.rg" data-field="ds_rg">RG</th>
+					<th data-sortable="true" data-formatter="UserTreat.phone" data-field="ds_celular">Celular</th>
+					<th data-sortable="true" data-formatter="UserTreat.genre" data-field="ds_sexo">Gênero</th>
+					<th data-sortable="true" data-formatter="UserTreat.date" data-field="ds_nascimento">Nascimento</th>
+					<th data-sortable="true" data-field="ds_nome_cartao">Cartão</th>
+					<th data-sortable="true" data-field="ds_nome_amigo">Nome (amigo)</th>
+					<th data-sortable="true" data-field="ds_endereco_amigo">Endereço (amigo)</th>
+					<th data-sortable="true" data-field="ds_cidade_amigo">Cidade (amigo)</th>
+					<th data-sortable="true" data-field="ds_uf_amigo">UF (amigo)</th>
+					<th data-sortable="true" data-formatter="UserTreat.cpf" data-field="ds_cpf_amigo">CPF (amigo)</th>
+					<th data-sortable="true" data-formatter="UserTreat.rg" data-field="ds_rg_amigo">RG (amigo)</th>
+					<th data-sortable="true" data-formatter="UserTreat.phone" data-field="ds_telefone_amigo">Telefone (amigo)</th>
+					<th data-sortable="true" data-formatter="UserTreat.phone" data-field="ds_celular_amigo">Celular (amigo)</th>
+					<th data-sortable="true" data-field="ds_email_amigo">E-mail (amigo)</th>
+					<th data-sortable="true" data-formatter="UserTreat.genre" data-field="ds_sexo_amigo">Gênero (amigo)</th>
+					<th data-sortable="true" data-formatter="UserTreat.date" data-field="ds_nascimento_amigo">Nascimento (amigo)</th>
+<!-- 					
+					<th data-sortable="true" data-visible="false" data-formatter="UserTreat.datetime" data-field="dt_evento_inicio">Início</th>
+					<th data-sortable="true" data-visible="false" data-formatter="UserTreat.datetime" data-field="dt_evento_fim">Fim</th>
+					<th data-sortable="true" data-visible="false" data-field="ds_evento">Descrição</th>
+-->
+				</tr>
+			</thead>
+		</table>
+
+	</div>
+</div>

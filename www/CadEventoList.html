@@ -1,0 +1,37 @@
+<div class="col-lg-12">
+    <h1 id="page_header" class="page-header"></h1>
+</div>
+
+<div id="body_wrapper">
+	<div id="xls_toolbar">
+		<button type="button" id="btn_download_xls" class="btn btn-way">Download XLS</button>
+	</div>
+
+	<div id="page_body" class="col-lg-12">
+
+		<table id="event_table"
+			data-unique-id="id_evento"
+			data-click-to-select="true"
+			data-toolbar="#xls_toolbar"
+			>
+			<thead>
+				<tr>
+					<!-- <th data-radio="true"></th> -->
+					<th data-sortable="true" data-field="nm_evento">Nome</th>
+					<th data-sortable="true" data-visible="false" data-field="ds_meta">Tema</th>
+					<th data-sortable="true" data-visible="false" data-field="nm_local">Local</th>
+
+					<th data-sortable="true" data-field="qt_pax">Total de Vagas</th>
+					<th data-sortable="true" data-field="qt_enable">Disponíveis</th>
+					<th data-sortable="true" data-field="qt_pax_bloqueada">Bloqueadas</th>
+					<th data-sortable="true" data-field="qt_confirmed">Confirmadas</th>
+					<th data-sortable="true" data-field="qt_interested">Na fila</th>
+					<th data-sortable="true" data-visible="false" data-formatter="UserTreat.datetime" data-field="dt_evento_inicio">Início</th>
+					<th data-sortable="true" data-visible="false" data-formatter="UserTreat.datetime" data-field="dt_evento_fim">Fim</th>
+					<th data-sortable="true" data-visible="false" data-field="ds_evento">Descrição</th>
+				</tr>
+			</thead>
+		</table>
+
+	</div>
+</div>

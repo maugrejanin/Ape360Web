@@ -1,0 +1,54 @@
+.fixed-table-body{
+	height: auto;
+}
+
+.way-table{
+	background-color: white;
+}
+
+.way-table tr{
+	border-bottom: 1px solid #eaeaea;
+    cursor: pointer;
+}
+
+.way-table thead th{
+    background-color: #000000!important;
+    color: #CCCCCC;
+}
+
+.way-table tbody tr:last-child{
+	border-bottom: 1px solid #DDDDDD;
+}
+
+.way-table td{
+	border: 0px solid!important
+}
+
+.way-table tr.dark-table-row, .way-table thead{
+	background-color: #f9f9f9;
+}
+
+.way-table tr:hover{
+	background-color: #DCAEB5!important;
+}
+
+.way-table tbody .selected td {
+    background-color: #CDCDCD;
+    cursor: default;
+}
+
+.way-table th{
+	border: 0px!important;
+}
+
+.way-table th:focus{
+	outline: 0;
+}
+
+.way-table-container .columns button{
+	height: 40px;
+}
+
+.way-table-container .fixed-table-toolbar .bs-bars{
+	margin-top: 10px;
+}

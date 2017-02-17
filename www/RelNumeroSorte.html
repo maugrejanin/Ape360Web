@@ -1,0 +1,55 @@
+<style type="text/css">
+	#cupom_img{
+		height: 236px;
+		max-width: 100%;
+	}
+
+	#cupom_dialog{
+		text-align: center;
+	}
+</style>
+
+<div class="col-lg-12">
+    <h1 id="page_header" class="page-header"></h1>
+</div>
+
+<div id="body_wrapper">
+	<div id="xls_toolbar">
+		<button type="button" id="btn_download_xls" class="btn btn-way">Download XLS</button>
+	</div>
+
+	<div id="page_body" class="col-lg-12">
+
+		<table id="numero_sorte_table"
+			data-unique-id="id_cupom"
+			data-toolbar="#xls_toolbar"
+			>
+			<thead>
+				<tr>
+
+					<!-- <th data-radio="true"></th> -->
+					<th data-sortable="true" data-field="id_numero">Números da sorte</th>
+					<th data-sortable="true" data-field="cd_cupom">Número do cupom</th>
+
+					<th data-sortable="true" data-formatter="RelNumeroSorte.treatType" data-field="tp_cupom">Tipo</th>
+					<th data-sortable="true" data-formatter="UserTreat.defaultMoney" data-field="vl_cupom">Valor</th>
+					<th data-sortable="true" data-formatter="UserTreat.date" data-field="dt_cupom">Data da compra</th>
+					<th data-sortable="true" data-width="200" data-formatter="UserTreat.datetime" data-field="dt_cadastro">Data de cadastro</th>
+					<th data-sortable="true" data-formatter="RelNumeroSorte.treatStatus" data-field="ic_status">Status</th>
+<!--
+					<th data-sortable="true" data-visible="false" data-formatter="UserTreat.datetime" data-field="dt_evento_inicio">Início</th>
+					<th data-sortable="true" data-visible="false" data-formatter="UserTreat.datetime" data-field="dt_evento_fim">Fim</th>
+					<th data-sortable="true" data-visible="false" data-field="ds_evento">Descrição</th>
+-->
+				</tr>
+			</thead>
+		</table>
+
+	</div>
+</div>
+
+<div id="cupom_dialog_html" class="hidden-html">
+	<div id="cupom_dialog">
+		<img id="cupom_img"></div>
+	</div>
+</div>

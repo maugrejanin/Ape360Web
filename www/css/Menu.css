@@ -1,0 +1,16 @@
+@media screen and (max-width: 1217px) {
+
+	.menu-items-panel{
+		left: 0!important;
+		margin-left: 0!important;
+		position: initial;
+	}
+
+
+}
+
+@media print {
+	.menu-container {
+		display: none;
+	}
+}

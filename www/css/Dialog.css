@@ -1,0 +1,25 @@
+.bootstrap-dialog.type-primary .modal-header {
+    /*background-color: #B9142F;
+    border-color: #000000;*/
+    background-color: #000000!important;
+    border-color: #CCCCCC;
+}
+
+.bootstrap-dialog.type-primary .bootstrap-dialog-title {
+    color: #CCCCCC!important;
+    font-weight: bold;
+}
+
+.bootstrap-dialog.type-primary .bootstrap-dialog-close-button .close {
+    color: white!important;
+    opacity: .5!important;
+}
+
+.bootstrap-dialog.type-primary .bootstrap-dialog-close-button .close:hover {
+    color: white!important;
+    opacity: .7!important;
+}
+
+.bootstrap-dialog .bootstrap-dialog-message{
+    font-size: 24px!important;
+}

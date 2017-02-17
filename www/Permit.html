@@ -1,0 +1,191 @@
+<style type="text/css">
+
+	.no-action-server-msg{
+		margin-left: 25px;
+		margin-right: 25px;
+	}
+
+	#ds_role{
+		height: 150px;
+	}
+
+	.panel-role-action table{
+	    border-left: 0!important;
+	    border-right: 0!important;
+		margin-right: 0!important;
+		width: 100%;
+	}
+
+	#permission_nav_tabs > li{
+		width: 50%;
+		text-align: center;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+
+	#permission_nav_tabs > li > a{
+		margin-right: 0;
+		margin-left: 0;
+	}
+
+	#role_profile_toolbar{
+		padding: 10px 0;
+	}
+
+	.select-container{
+		padding-top: 10px;
+	}
+
+	.panel-heading{
+		font-weight: bold;
+	}
+
+	.check-server-init{
+ 	    margin: 3px 15px 0 3px!important;
+    	float: left;
+    }
+
+	.panel-tab-container{
+		padding: 0 20px 20px 20px;
+		border: 1px solid #ddd;
+		border-top: none;
+	}
+
+	.panel-role-action .fixed-table-toolbar{
+		padding-right: 20px;
+	}
+
+	#select_profile_container{
+		margin-bottom: -10px;
+	}
+</style>
+
+<div class="col-lg-12">
+    <h1 id="page_header" class="page-header"></h1>
+</div>
+
+<div id="body_wrapper">
+	<ul id="permission_nav_tabs" class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active">
+			<a href="#profile_relation" aria-controls="profile_relation" role="tab" data-toggle="tab">Perfis</a>
+		</li>
+		<li role="presentation">
+			<a href="#role_relation" aria-controls="role_relation" role="tab" data-toggle="tab">Roles</a>
+		</li>
+	</ul>
+
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active panel-tab-container" id="profile_relation">
+			<form id="role_form">
+				<div class="select-container" id="select_profile_container">
+					<div class="form-group">
+						<label for="id_usuario_perfil">Perfis</label>
+						<div>
+							<select name="id_usuario_perfil" id="id_usuario_perfil"></select>
+						</div>
+					</div>
+				</div>
+				<div id="check_role_container">
+					<div id="role_profile_toolbar">
+						<button type="button" id="btn_submit_roles" class="btn">Salvar</button>
+						<button type="button" id="btn_new_profile" class="btn">Novo perfil</button>
+					</div>
+
+					<table id="role_table" data-toolbar="#role_profile_toolbar">
+						<thead>
+							<tr>
+								<th data-field="id_role" data-width="150" data-formatter="Permit.treatCheckRole">Role concedida</th>
+								<th data-field="nm_role" data-width="300">Nome</th>
+								<th data-field="ds_role">Descrição</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</form>
+		</div>
+		<div role="tabpanel" class="tab-pane panel-tab-container" id="role_relation">
+			<form id="action_form">
+				<div class="select-container" id="select_role_container">
+					<div class="form-group">
+						<label for="id_role">Roles</label>
+						<div>
+							<select name="id_role" id="id_role"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div id="role_description"></div>
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-submit-actions">Salvar</button>
+						<button type="button" id="btn_new_role" class="btn">Nova role</button>
+						<button type="button" id="btn_collapse_all" class="btn expand">Expandir todos</button>
+					</div>
+				</div>
+				<div id="check_action_container">
+					
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-submit-actions">Salvar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>
+
+<div id="panel_role_html" class="hidden-html">
+	<div class="panel panel-default panel-role-action">
+		<div id="headingOne" class="panel-heading" role="tab">
+			<h4 class="panel-title">
+				<a role="button" class="collapsed" data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne"></a>
+			</h4>
+		</div>
+		<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+			<div class="panel-body">
+				<p class="server-description"></p>
+			</div>
+
+			<table class="action-server-table">
+				<thead>
+					<tr>
+						<th data-field="id_permissao" data-formatter="Permit.treatCheckAction">Permissão concedida</th>
+						<th data-field="ds_titulo" data-sort="true">Nome</th>
+						<th data-field="ds_permissao" data-sort="true">Descrição</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div id="new_profile_html" class="hidden-html">
+	<form id="form_new_profile">
+		<div class="form-group">
+			<label for="nm_usuario_perfil">Nome do novo perfil</label>
+			<div>
+				<input required type="text" class="form-control" name="nm_usuario_perfil" id="nm_usuario_perfil" />
+			</div>
+		</div>
+	</form>
+</div>
+
+<div id="new_role_html" class="hidden-html">
+	<form id="form_new_role">
+		<div class="form-group">
+			<label for="nm_role">Nome da nova role</label>
+			<div>
+				<input required type="text" class="form-control" name="nm_role" id="nm_role" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="ds_role">Descrição</label>
+			<div>
+				<textarea required class="form-control" name="ds_role" id="ds_role"></textarea>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div id="no_action_server" class="hidden-html">
+	<div class="well no-action-server-msg">Não há permissões a serem concedidas nessa página</div>
+</div>

@@ -1,0 +1,308 @@
+/* BTN BTN BTN BTN BTN BTN BTN BTN */
+
+.btn-way{
+	color: #000000;
+    font-weight: 600;
+    height: 40px;
+    background-color: #B9142F;
+    font-family: din;
+    font-size: 12px;
+    text-transform: uppercase;
+    border: none;
+    outline: 0;
+}
+
+.btn-way:hover {
+    background-color: rgb(221, 202, 142);
+}
+
+.btn-way.btn-success {
+    background-color: green!important;
+    border-color: #005a03!important;
+}
+
+.btn-way.btn-danger {
+    background-color: #cf0303!important;
+    border-color: #a50000!important;
+}
+
+#wrapper .btn-save {
+    background-color: #B9142F!important;
+    color: #ffffff!important;
+    border: 1px solid #B9142F!important;
+    float: right;
+    margin-top: 15px;
+    width: 150px;
+}
+
+/* BTN BTN BTN BTN BTN BTN BTN BTN */
+
+/* ERRORS ERRORS ERRORS ERRORS ERRORS */
+
+.help-block.with-errors {
+    color: #d22020;
+    font-weight: bold;
+}
+
+.bootstrap-select .help-block.with-errors {
+    margin-top: 45px;
+}
+
+/* isso serve para ajustar a posição dos inputs (button + input) quando uma mensagem de validação lhe é inputada */
+.input-group .input-group-btn{
+	vertical-align: top;
+}
+
+/* ERRORS ERRORS ERRORS ERRORS ERRORS */
+
+/* MISCELANEOUS MISCELANEOUS MISCELANEOUS */
+
+.input-way{
+	height: 40px;
+}
+
+.input-label{
+    text-align: center;
+    margin-top: 26px;
+}
+
+.panel-way .panel-heading{
+	color: #ACB1BC;
+    background-color: #000000;
+    border-color: #ddd;
+    height: 45px;
+    font-family: din;
+    text-transform: uppercase;
+}
+
+.main-download{
+	color: green;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.label-container{
+	align-items: center!important;
+}
+
+.field-column{
+	font-weight: bold;
+	text-align: right;
+}
+
+.input-way:focus {
+    border-color: #9B9B9B;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px rgb(108, 108, 108);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px rgb(108, 108, 108);
+}
+
+.textarea-dialog{
+	height: 180px!important;
+	padding: 15px;
+}
+
+.btn-add-input{
+	height: 40px;
+    width: 60px;
+    font-size: 26px;
+    background-color: #000000;
+    color: #ECECEC;
+    border: #000000;
+}
+
+.way-form .panel-body .row > div, .input-cell{
+    margin: 10px 0;
+    min-height: 75px;
+}
+
+.way-form .row > div:nth-child(2n) .btn-way{
+	margin-top: 25px;
+}
+
+/* MISCELANEOUS MISCELANEOUS MISCELANEOUS */
+
+/* H3 H3 H3 H3 H3 H3 H3 */
+
+.panel-heading h3{/* Título de panels */
+	line-height: 25px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.panel-body h3{/* Campos de formulários(apresentação apenas) */
+	height: 55px;
+    align-items: flex-end;
+    display: flex;
+}
+
+/* H3 H3 H3 H3 H3 H3 H3 */
+
+/* ------------------------------------------------------------------------------------------------------ */
+
+/* DATEPICKER DATEPICKER DATEPICKER DATEPICKER */
+
+.datepicker table tr td.active:active, .datepicker table tr td.active.highlighted:active, .datepicker table tr td.active.active, .datepicker table tr td.active.highlighted.active, .open>.dropdown-toggle.datepicker table tr td.active, .open>.dropdown-toggle.datepicker table tr td.active.highlighted{
+	color: #000;
+    background-color: #B9142F;
+    border-color: #7A6625;
+}
+
+.datepicker table tr td.active:active:hover, .datepicker table tr td.active.highlighted:active:hover, .datepicker table tr td.active.active:hover, .datepicker table tr td.active.highlighted.active:hover, .open>.dropdown-toggle.datepicker table tr td.active:hover, .open>.dropdown-toggle.datepicker table tr td.active.highlighted:hover, .datepicker table tr td.active:active:focus, .datepicker table tr td.active.highlighted:active:focus, .datepicker table tr td.active.active:focus, .datepicker table tr td.active.highlighted.active:focus, .open>.dropdown-toggle.datepicker table tr td.active:focus, .open>.dropdown-toggle.datepicker table tr td.active.highlighted:focus, .datepicker table tr td.active:active.focus, .datepicker table tr td.active.highlighted:active.focus, .datepicker table tr td.active.active.focus, .datepicker table tr td.active.highlighted.active.focus, .open>.dropdown-toggle.datepicker table tr td.active.focus, .open>.dropdown-toggle.datepicker table tr td.active.highlighted.focus {
+    color: #000;
+    background-color: #B9142F;
+    border-color: #7A6625;
+}
+
+.datepicker table tr td span.active:active:hover, .datepicker table tr td span.active:hover:active:hover, .datepicker table tr td span.active.disabled:active:hover, .datepicker table tr td span.active.disabled:hover:active:hover, .datepicker table tr td span.active.active:hover, .datepicker table tr td span.active:hover.active:hover, .datepicker table tr td span.active.disabled.active:hover, .datepicker table tr td span.active.disabled:hover.active:hover, .open>.dropdown-toggle.datepicker table tr td span.active:hover, .open>.dropdown-toggle.datepicker table tr td span.active:hover:hover, .open>.dropdown-toggle.datepicker table tr td span.active.disabled:hover, .open>.dropdown-toggle.datepicker table tr td span.active.disabled:hover:hover, .datepicker table tr td span.active:active:focus, .datepicker table tr td span.active:hover:active:focus, .datepicker table tr td span.active.disabled:active:focus, .datepicker table tr td span.active.disabled:hover:active:focus, .datepicker table tr td span.active.active:focus, .datepicker table tr td span.active:hover.active:focus, .datepicker table tr td span.active.disabled.active:focus, .datepicker table tr td span.active.disabled:hover.active:focus, .open>.dropdown-toggle.datepicker table tr td span.active:focus, .open>.dropdown-toggle.datepicker table tr td span.active:hover:focus, .open>.dropdown-toggle.datepicker table tr td span.active.disabled:focus, .open>.dropdown-toggle.datepicker table tr td span.active.disabled:hover:focus, .datepicker table tr td span.active:active.focus, .datepicker table tr td span.active:hover:active.focus, .datepicker table tr td span.active.disabled:active.focus, .datepicker table tr td span.active.disabled:hover:active.focus, .datepicker table tr td span.active.active.focus, .datepicker table tr td span.active:hover.active.focus, .datepicker table tr td span.active.disabled.active.focus, .datepicker table tr td span.active.disabled:hover.active.focus, .open>.dropdown-toggle.datepicker table tr td span.active.focus, .open>.dropdown-toggle.datepicker table tr td span.active:hover.focus, .open>.dropdown-toggle.datepicker table tr td span.active.disabled.focus, .open>.dropdown-toggle.datepicker table tr td span.active.disabled:hover.focus {
+    color: #000;
+    background-color: #B9142F;
+    border-color: #7A6625;
+}
+
+.datepicker table tr td span.active:active, .datepicker table tr td span.active:hover:active, .datepicker table tr td span.active.disabled:active, .datepicker table tr td span.active.disabled:hover:active, .datepicker table tr td span.active.active, .datepicker table tr td span.active:hover.active, .datepicker table tr td span.active.disabled.active, .datepicker table tr td span.active.disabled:hover.active, .open>.dropdown-toggle.datepicker table tr td span.active, .open>.dropdown-toggle.datepicker table tr td span.active:hover, .open>.dropdown-toggle.datepicker table tr td span.active.disabled, .open>.dropdown-toggle.datepicker table tr td span.active.disabled:hover {
+    color: #000;
+    background-color: #B9142F;
+    border-color: #7A6625;
+}
+
+/* DATEPICKER DATEPICKER DATEPICKER DATEPICKER */
+
+/* ------------------------------------------------------------------------------------------------------ */
+
+/* SELECT SELECT SELECT SELECT */
+
+.bootstrap-select.input-way button{
+	height: 40px;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li a:focus, .bootstrap-select.input-way button:focus{
+	outline: 0!important;
+}
+
+/* SELECT SELECT SELECT SELECT */
+
+/* ------------------------------------------------------------------------------------------------------ */
+
+/* FILE FILE FILE FILE */
+
+.btn-filepicker {
+    width: 200px!important;
+    float: left;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    font-weight: bold;
+}
+
+.btn-filepicker .badge{
+    margin-left: 12px;
+    font-size: 16px;
+}
+
+.text-filepicker {
+    width: calc(100% - 200px)!important;
+    float: left;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.btn-filepicker, .text-filepicker{
+	height: 40px;
+}
+
+.btn-filepicker{
+    border-top-right-radius: 0!important;
+    border-bottom-right-radius: 0!important;
+}
+/* FILE FILE FILE FILE */
+
+/* SWITCHER SWITCHER SWITCHER SWITCHER */
+
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary, .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary {
+    color: #222;
+    background: #B9142F;
+}
+
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-default, .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-default {
+    color: #000;
+    background: #eee;
+}
+
+.bootstrap-switch-focused{
+	border-color: #9B9B9B!important;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px rgb(108, 108, 108)!important;
+}
+
+.bootstrap-switch .bootstrap-switch-handle-off, .bootstrap-switch .bootstrap-switch-handle-on, .bootstrap-switch .bootstrap-switch-label{
+	padding: 8px 12px;
+}
+
+.bootstrap-switch.bootstrap-switch-animate .bootstrap-switch-container{
+	height: 100%;
+}
+
+.bootstrap-switch{
+	height: 40px;
+}
+
+.required-symbol:before{
+	content: "*";
+}
+
+@media print {
+	.required-symbol:before{
+		content: " "!important;
+	}
+
+	.way-form .panel-body .row > div, .input-cell {
+	    margin: 10px 0;
+	    height: 30px;
+	    min-height: 0px;
+	}
+
+	label{
+		font-weight: bold;
+	}
+
+	label:after{
+		content: ": ";
+	}
+
+	.col-lg-6 > div {
+	    display: inline;
+	}
+
+	.bootstrap-select span.caret{
+		display: none;
+	}
+
+	.fields-container{
+		height: auto!important;
+	}
+
+	.bootstrap-switch, .bootstrap-select button, .input-way{
+		max-width: 60%;
+		display: inline;
+		border: none!important;
+		box-shadow: none!important;
+	}
+
+	.bootstrap-switch-on .bootstrap-switch-handle-off, .bootstrap-switch-off .bootstrap-switch-handle-on{
+		display: none!important;
+	}
+
+	.bootstrap-switch-container > span{
+		background-color: transparent!important;
+	}
+
+	.bootstrap-switch-container{
+		width: 80px;
+	    margin-left: 0;
+	}
+
+    .page-header {
+        display: none;
+    }
+}
+
+/* SWITCHER SWITCHER SWITCHER SWITCHER */

@@ -1,0 +1,96 @@
+#popup_container {
+	font-size: 12px;
+	height: 292px; /* Dialog will be no smaller than this */
+	width: 752px; /* Dialog will be no smaller than this */
+	background:url(../../img/alert_body.png) no-repeat center center;
+	background-size: 100%;
+	border: 0px;
+	color: #ffffff;
+}
+
+#popup_close {
+	width: 52px;
+	height: 52px;
+	background:url(../../img/alert_close.png) no-repeat right center;
+	background-size: auto 100%;
+	width: 752px;
+	cursor: pointer;
+}
+
+#popup_close:hover {
+	background:url(../../img/alert_close_hover.png) no-repeat right center;
+}
+
+#popup_close:after {
+	background:url(../../img/alert_close_hover.png) no-repeat right center;	
+	display: none;
+}
+
+#popup_title {
+	font-family: din;
+	cursor: default;
+	padding: 0px;
+	margin: 0px;
+	margin-top: 10px;
+	font-size: 45px;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 900;
+}
+
+#popup_content {
+	/* background: 16px 16px no-repeat url(../img/info.png); */
+	padding: 1em 1.75em;
+	margin: 0em;
+}
+
+#popup_content.alert {
+	/* background-image: url(../img/info.png); */
+}
+
+#popup_content.confirm {
+	/* background-image: url(../img/important.gif); */
+}
+
+#popup_content.prompt {
+	/* background-image: url(../img/help.gif); */
+}
+
+#popup_message {
+	font-family: din;
+	margin-top: 15px;
+	border-top: 3px solid #ffffff;
+	padding-top: 15px;
+	font-size: 30px;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 100;
+}
+
+#popup_panel {
+	text-align: center;
+	margin: 1em 0em 0em 1em;
+}
+
+#popup_panel #popup_ok, #popup_panel #popup_cancel {
+	border: 0px solid #B9142F;
+	background-color: #B9142F;
+	color: #FFFFFF;
+	font-weight: bold;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	cursor: pointer;
+	width: 90px;
+	height: 30px;
+	display: none;
+}
+
+#popup_panel #popup_cancel {
+	background-color: #4F4F4F;
+}
+
+#popup_prompt {
+	margin: .5em 0em;
+	background-color: #B9142F;
+}

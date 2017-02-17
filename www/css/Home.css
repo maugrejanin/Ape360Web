@@ -1,0 +1,91 @@
+.menu-default-panel a.menu-item{
+	outline: 0;
+	text-decoration: none;
+}
+
+#pnlContent {
+    margin: 10px auto;
+    border-radius: 7px;
+    min-height: calc(100vh - 189px);
+    padding: 10px;
+}
+
+#logo_container{
+	width: 171px;
+}
+
+#footer{
+	height: 60px;
+    background-color: #000000;
+    color: #cccccc;
+    text-align: center;
+    padding-top: 10px;
+}
+	
+#btn_logout_container{
+	width: 171px;
+    float: right;
+    text-align: left;
+}
+
+#log_name_container{
+	text-overflow: ellipsis;
+    overflow: hidden;
+    padding-right: 10px;
+	width: 100%;
+	text-align: center;
+	white-space: nowrap;
+	margin-top: 10px;
+}
+
+.logout-item, .logout-item:visited {
+    display: inline-block;
+    line-height: 18px;
+    font-size: 14px;
+    width: 44%;
+    color: #a0a0a0!important;
+    text-decoration: none!important;
+    margin: 4px;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.logout-item:hover {
+	color: #B9142F!important;
+	text-decoration: none;
+}
+
+/* BREADCRUMB BREADCRUMB BREADCRUMB BREADCRUMB */
+
+.my-breadcrumb{
+	position: relative;
+	display: block;
+	width: 100%;
+	margin-bottom: 0;
+	max-width: 1300px;
+	border-bottom: 2px solid #e0e0e0!important; /*sobreescreve o bootstrap*/
+	background-color: #ececec!important;
+	color: #000000!important;
+}
+
+.my-breadcrumb a {
+    font-weight: bold;
+    cursor: pointer;
+    color: #000000;
+    text-decoration: none;
+}
+
+.my-breadcrumb a:focus, .my-breadcrumb a:hover {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.my-breadcrumb li{
+	cursor: default;
+}
+
+@media print {
+    #footer{
+        display: none;
+    }
+}

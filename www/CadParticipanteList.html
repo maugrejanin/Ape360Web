@@ -1,0 +1,63 @@
+<style>
+	.list-group-item.confirmed {
+		background-color: #c6ffcc;
+	}
+
+	.list-group-item.confirmed:hover {
+		background-color: #b3efb9;
+		cursor: pointer;
+	}
+
+	.list-group-item:hover{
+		cursor: pointer;
+	}
+</style>
+
+<div class="col-lg-12">
+    <h1 id="page_header" class="page-header"></h1>
+</div>
+
+<div id="body_wrapper">
+	<div id="xls_toolbar">
+		<button type="button" id="btn_download_xls" class="btn btn-way">Download XLS</button>
+		<button type="button" id="btn_download_xlsmaster" class="btn btn-way">Download XLS Geral</button>
+	</div>
+
+	<div id="page_body" class="col-lg-12">
+
+		<table id="participant_table"
+			data-unique-id="id_usuario"
+			data-click-to-select="true"
+			data-toolbar="#xls_toolbar"
+			>
+			<thead>
+				<tr>
+					<th data-sortable="true" data-field="ds_nome">Nome</th>
+					<th data-sortable="true" data-visible="false" data-field="ds_email">E-mail</th>
+					<th data-sortable="true" data-visible="false" data-field="ds_telefone">Telefone</th>
+					<th data-sortable="true" data-field="nr_evento">Eventos confirmadas</th>
+					<th data-sortable="true" data-field="nr_pendente">Eventos pendentes</th>
+					<th data-sortable="true" data-visible="false" data-field="nr_interesse">Qtd. interesse</th>
+					<th data-sortable="true" data-field="nm_promotor">Promotor(es)</th>
+				</tr>
+			</thead>
+		</table>
+
+	</div>
+</div>
+
+<div id="events_list_html" class="hidden-html">
+	<div class="list-group">
+
+	</div>
+</div>
+
+<!-- <div class="list-group">
+	<a href="#" class="list-group-item active">
+	Cras justo odio
+	</a>
+	<a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+	<a href="#" class="list-group-item">Morbi leo risus</a>
+	<a href="#" class="list-group-item">Porta ac consectetur ac</a>
+	<a href="#" class="list-group-item">Vestibulum at eros</a>
+</div> -->

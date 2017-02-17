@@ -1,0 +1,233 @@
+html, body {
+	background-color: #000000!important;
+}
+
+.BgHome {
+    overflow: auto;
+    width: 100%;
+    background-image: url(../img/bg_login.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    height: 100vh;
+    width: 100vw;
+}
+
+.CenterAll {
+	border: 0px solid #FFFFFF;
+	margin: auto auto auto auto;
+	padding-top: 300px;
+	min-height: 500px;
+}
+
+.CenterMe {
+	border: 0px solid #FF0000;
+	margin: 30px auto auto auto;
+	width: 100%;
+	text-align: center;
+}
+
+.LogoClienteCentro {
+	border-radius: 10px 10px 0px 0px;
+	background-image: url('../img/home_logo_280x77.png');
+	background-size: auto 70px;
+	background-repeat:no-repeat;
+	background-position:center center; 
+	border: 0px solid #FFFFFF;
+	width: 290px;
+	height: 118px;
+	margin: 20px auto auto auto;
+	background-color: #262626;
+}
+
+.PainelLogin, .PainelResetSenha {
+	border-radius: 0 0 10px 10px!important;
+	position: relative;
+	display: block;
+	height: 98px;
+	width: 290px;
+	margin: 0px auto auto auto;
+	background-color: #ffffff;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.PainelResetSenha {
+	height: 49px;
+}
+
+.PainelConfigSenha {
+	position: relative;
+	display: block;
+	height: 147px;
+	width: 290px;
+	margin: 0px auto auto auto;
+	background-color: #ffffff;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.PainelReenviarSenha {
+	position: relative;
+	display: block;
+	height: 98px;
+	width: 290px;
+	margin: 0px auto auto auto;
+	background-color: #ffffff;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.PainelSenhaButtons {
+	position: relative;
+	display: block;
+	height: 30px;
+	width: 290px;
+	margin: 40px auto auto auto;
+}
+
+.ContainerLogin, .ContainerResetSenha {
+	position: relative;
+	display: block;
+	margin: 0px auto auto auto;
+}
+
+.CampoLogin, .CampoSenha, .CampoSenhaOriginal, .CampoSenhaRepita{
+	position: absolute; 
+	left: 20px;
+	width: 240px;
+	height: 49px;
+	background-size: 18px 18px;
+	background-repeat:no-repeat;
+	background-position:center left; 
+}
+
+.CampoLogin {
+	top: 0px; 
+	background-image: url('../img/login.png');
+}
+
+.CampoSenha, .CampoSenhaOriginal, .CampoSenhaRepita {
+	top: 50px; 
+	background-image: url('../img/senha.png');
+}
+
+.CampoSenhaOriginal {
+	top: 0px; 
+}
+
+.CampoSenhaRepita {
+	top: 100px; 
+}
+
+.CampoLogin span, .CampoSenha span, .CampoSenhaOriginal span, .CampoSenhaRepita span{
+	position: absolute; 
+	top: 0px; 
+	left: 0px;
+	width: 50px;
+	height: 47px;
+	border: none;
+	background: transparent;
+	color: #012438;
+	padding: 15px;
+}
+
+.CampoLogin input, .CampoSenha input, .CampoSenhaOriginal input, .CampoSenhaRepita input{
+	position: absolute; 
+	top: 0px; 
+	left: 50px;
+	width: 190px;
+	height: 47px;
+	border: none;
+	background: transparent;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 5px;
+	outline: none;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+.CampoLogin:focus, .CampoSenha:focus, .CampoSenhaOriginal:focus, .CampoSenhaRepita:focus{
+    outline: none;
+    box-shadow: 0px 0px 5px #FFFFFF;
+    border-color: #FFFFFF;
+	-webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+.CampoLogin:hover, .CampoSenha:hover {
+    border: 0px solid #fff;
+}
+
+.login-btn {
+  margin: 20px auto auto auto;
+  width: 290px;
+  height: 42px;
+  line-height: 42px;
+  background-color: #B9142F;
+  border-radius: 5px;
+  padding: 0px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+}
+
+.login-btn:hover {
+	background-color: #941126;
+}
+
+.LinkEsqueciSenha {
+	margin: 5px auto auto auto;
+	display: block;
+	font-size: 12px;
+	color: #FFFFFF;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 8px;
+	cursor: pointer;
+	width: 160px;
+	text-transform: uppercase;
+}
+
+.LinkEsqueciSenha:hover {
+	color: #B9142F;
+}
+
+.CopyRightMini {
+	position: absolute;
+	bottom: 30px;
+	width: 290px;
+	left: 50%;
+	display: block;
+	font-size: 12px;
+	color: #FFFFFF;
+	text-align: center;
+	vertical-align: top;
+	border: 0px solid #FF0000;
+	margin: 0px auto auto -145px;
+	padding-top: 8px;
+}
+
+@media screen and (max-height: 770px) {
+	.CenterAll {
+		padding-top: 110px;
+	}
+}
+
+@media screen and (max-height: 500px) {
+	.CopyRightMini {
+		top: 440px;
+	}
+}

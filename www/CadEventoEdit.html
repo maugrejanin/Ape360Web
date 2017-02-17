@@ -1,0 +1,164 @@
+<div class="col-lg-12">
+    <h1 id="page_header" class="page-header"></h1>
+</div>
+
+<style>
+	#ds_evento{
+	    height: 100px;
+	}
+
+	textarea{
+		max-width: 100%;
+	}
+
+	#tab_container .nav-tabs li{
+		width: 33%;
+    	text-align: center;
+	}
+
+	#tab_container .nav-tabs li a{
+		font-size: 20px;
+	}
+
+	#tab_container .badge{
+		margin-left: 12%;
+		min-width: 40px;
+		height: 27px;
+		font-size: 20px;
+		background-color: #b9142f;
+	}
+</style>
+
+<div id="page_body">
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<form id="event_form" class="way-form">
+
+					<div class="panel-way panel">
+
+						<div class="panel-heading clearfix">
+							<h3 class="panel-title">Dados do evento</h3>
+						</div>
+
+						<div class="panel-body">
+
+							<div class="row">
+								<div class="col-lg-6 col-sm-12">
+									<label>Nome</label>
+									<input type="text" autofocus id="nm_evento" name="nm_evento" class="form-control input-way" placeholder="Nome" required>
+								</div>
+								<div class="col-lg-4 col-sm-12">
+									<h2 class="input-label">Local: <label name="nm_local" id="nm_local"></label></h2>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<label>Qtd. Pessoas</label>
+									<input type="number" id="qt_pax" min="0" name="qt_pax" class="form-control input-way" placeholder="Qtd. Pessoas" required>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<label>Qtd. Pessoas Bloqueadas</label>
+									<input type="number" id="qt_pax_bloqueada" min="0" name="qt_pax_bloqueada" class="form-control input-way" placeholder="Qtd. Vagas bloquadas" required>
+								</div>
+								<div class="col-sm-12">
+									<label>Descrição</label>
+									<textarea name="ds_evento" id="ds_evento" class="form-control input-way" placeholder="Descrição" required></textarea>
+								</div>
+								<div class="col-lg-4 col-sm-12">
+									<h2 class="input-label">Data: <label id="date" name="date"></label></h2>
+								</div>
+								<div class="col-lg-4 col-sm-12">
+									<h2 class="input-label">Início: <label id="time_inicio" name="time_inicio"></label></h2>
+								</div>
+								<div class="col-lg-4 col-sm-12">
+									<h2 class="input-label">Término: <label id="time_fim" name="time_fim"></label></h2>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</form>
+
+				<div id="tab_container">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#confirm_container" aria-controls="confirm_container" role="tab" data-toggle="tab">Confirmados <span class="badge" id="sum_confirmed"></span> </a></li>
+						<li role="presentation"><a href="#interest_container_code" aria-controls="interest_container_code" role="tab" data-toggle="tab">Interessados com link <span class="badge" id="sum_interest_code"></span> </a></li>
+						<li role="presentation"><a href="#interest_container_no_code" aria-controls="interest_container_no_code" role="tab" data-toggle="tab">Interessados sem link <span class="badge" id="sum_interest_no_code"></span> </a></li>
+					</ul>
+
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="confirm_container">
+							<div id="confirmed_toolbar">
+								<button type="button" id="btn_download_xls" class="btn btn-way">Download XLS</button>
+							</div>
+							<table id="confirm_table"
+								data-unique-id="id_usuario"
+								data-click-to-select="true"
+								data-toolbar="#confirmed_toolbar"
+								>
+								<thead>
+									<tr>
+										<th data-radio="true"></th>
+										<th data-sortable="true" data-field="ds_nome">Nome</th>
+										<th data-sortable="true" data-field="ds_email">E-mail</th>
+										<th data-sortable="true" data-formatter="UserTreat.phone" data-field="ds_telefone">Telefone</th>
+										<th data-sortable="true" data-formatter="UserTreat.datetime" data-field="dt_interesse">Interesse</th>
+										<th data-sortable="true" data-formatter="UserTreat.datetime" data-field="dt_confirmacao">Confirmação</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div role="tabpanel" class="tab-pane" id="interest_container_code">
+							<div id="interest_toolbar_code">
+								<button type="button" class="btn btn-way btn-confirm">Confirmar</button>
+							</div>
+							<table id="interest_table_code" class="interest-table"
+								data-unique-id="id_usuario"
+								data-click-to-select="true"
+								data-toolbar="#interest_toolbar_code"
+								>
+								<thead>
+									<tr>
+										<th data-radio="true"></th>
+										<th data-sortable="true" data-field="ds_nome">Nome</th>
+										<th data-sortable="true" data-field="ds_email">E-mail</th>
+										<th data-sortable="true" data-formatter="UserTreat.phone" data-field="ds_telefone">Telefone</th>
+										<th data-sortable="true" data-formatter="UserTreat.datetime" data-field="dt_interesse">Interesse</th>
+										<th data-sortable="true" data-field="nm_promotor">Promotor</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div role="tabpanel" class="tab-pane" id="interest_container_no_code">
+							<div id="interest_toolbar_no_code">
+								<button type="button" class="btn btn-way btn-confirm">Confirmar</button>
+							</div>
+							<table id="interest_table_no_code" class="interest-table"
+								data-unique-id="id_usuario"
+								data-click-to-select="true"
+								data-toolbar="#interest_toolbar_no_code"
+								>
+								<thead>
+									<tr>
+										<th data-radio="true"></th>
+										<th data-sortable="true" data-field="ds_nome">Nome</th>
+										<th data-sortable="true" data-field="ds_email">E-mail</th>
+										<th data-sortable="true" data-formatter="UserTreat.phone" data-field="ds_telefone">Telefone</th>
+										<th data-sortable="true" data-formatter="UserTreat.datetime" data-field="dt_interesse">Interesse</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-12">
+					<button type="button" class="btn btn-way btn-save" id="btn_edit">Editar</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
