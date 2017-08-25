@@ -2,9 +2,9 @@ var
 	__hidden;
 
 var 
-	CONFIG_CLIENT_URI = 'http://eurekaria.git/hering/www/',
-	CONFIG_ADMIN_URI = 'http://eurekaria.git/hering/www/admin',
-	CONFIG_SERVER_URI = 'http://eurekaria.git/hering/www/server/',
+	CONFIG_CLIENT_URI = 'http://eurekaria.git/Ape360Web/www/',
+	CONFIG_ADMIN_URI = 'http://eurekaria.git/Ape360Web/www/admin',
+	CONFIG_SERVER_URI = 'http://eurekaria.git/Ape360Web/www/server/',
 	// CONFIG_CLIENT_URI = 'https://apps.eurekaria.com/hering/www/',
 	// CONFIG_ADMIN_URI = 'https://apps.eurekaria.com/hering/www/admin',
 	// CONFIG_SERVER_URI = 'https://apps.eurekaria.com/hering/www/server/',

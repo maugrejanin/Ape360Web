@@ -79,7 +79,7 @@ class S_FrontEnd{
 			'ds_nascimento_amigo' => ['required', 'date'], 
 		], $insert_data);
 
-		$usuario = Model::search("SELECT id_usuario, ds_nome, ds_email, ds_pwd_hash FROM t_usuario where ds_email = ?", [$insert_data["ds_email"]]);
+		$usuario = Model::search("SELECT id_usuario, ds_nome, ds_email, ds_pwd_hash FROM usuario where ds_email = ?", [$insert_data["ds_email"]]);
 		$agora = new DateTime("now", new DateTimeZone( 'America/Sao_Paulo' ) );
 		if (count($usuario) > 0) {
 			return ["success" => "0", "title" => "E-mail já cadastrado", "message" => "Oops! Este e-mail já está cadastrado."];
@@ -112,8 +112,8 @@ class S_FrontEnd{
 		}
 		$agora = new DateTime("now", new DateTimeZone( 'America/Sao_Paulo' ) );
 		$solicitacao = Model::search("SELECT s.ds_codigo, s.ic_ativo, s.id_usuario, u.ds_nome, u.ds_email
-				FROM t_solicitacao_reset_senha s
-				inner join t_usuario u
+				FROM solicitacao_reset_senha s
+				inner join usuario u
 				on s.id_usuario = u.id_usuario
 				where s.ds_codigo = ? and s.ic_ativo = 'S' and s.dt_validade >= ?", [$hash, $agora->format('Y-m-d H:i:s')]);
 		if (count($solicitacao) == 0) {
@@ -140,8 +140,8 @@ class S_FrontEnd{
 		}
 		$agora = new DateTime("now", new DateTimeZone( 'America/Sao_Paulo' ) );
 		$pwd = password_hash($_POST["ds_password"], PASSWORD_DEFAULT);
-		Model::exec("UPDATE t_usuario set ds_pwd_hash = ?, dt_change_pwd = ? where id_usuario = ?", [$pwd, $agora->format('Y-m-d H:i:s'), $_SESSION["id_usuario"]]);
-		Model::exec("UPDATE t_solicitacao_reset_senha set ic_ativo = 'N', dt_utilizacao = ? where id_usuario = ? and ds_codigo = ?", [$agora->format('Y-m-d H:i:s'), $_SESSION["id_usuario"], $_SESSION["ds_codigo"]]);
+		Model::exec("UPDATE usuario set ds_pwd_hash = ?, dt_change_pwd = ? where id_usuario = ?", [$pwd, $agora->format('Y-m-d H:i:s'), $_SESSION["id_usuario"]]);
+		Model::exec("UPDATE solicitacao_reset_senha set ic_ativo = 'N', dt_utilizacao = ? where id_usuario = ? and ds_codigo = ?", [$agora->format('Y-m-d H:i:s'), $_SESSION["id_usuario"], $_SESSION["ds_codigo"]]);
 		return ["success" => "1", "message" => "Senha redefinida."];
 	}
 	public function solicitarResetSenha(){
@@ -160,14 +160,14 @@ class S_FrontEnd{
 		catch (Exception $ex) {
 			return ["success" => "0", "message" => "Por favor, preencha corretamente seu e-mail para continuar."];
 		}
-		$usuario = Model::search("SELECT u.id_usuario, u.ds_nome, u.ds_email, u.ds_pwd_hash FROM t_usuario u inner join t_usuario_cadastro c on u.id_usuario = c.id_usuario where u.ds_email = ? and c.ds_cpf = ?", [$insert_data["ds_email"], $insert_data["ds_cpf"]]);
+		$usuario = Model::search("SELECT u.id_usuario, u.ds_nome, u.ds_email, u.ds_pwd_hash FROM usuario u inner join usuario_cadastro c on u.id_usuario = c.id_usuario where u.ds_email = ? and c.ds_cpf = ?", [$insert_data["ds_email"], $insert_data["ds_cpf"]]);
 		if (count($usuario) > 0) {
 			$codigo = substr(md5(rand()), 0, 7);
 			$ds_codigo = substr(str_replace("%", "", urlencode(password_hash($codigo, PASSWORD_DEFAULT))), 0, 45);
 			$agora = new DateTime("now", new DateTimeZone( 'America/Sao_Paulo' ) );
 			$validade = new DateTime("now", new DateTimeZone( 'America/Sao_Paulo' ) );
 			$validade->add(new DateInterval('PT3H'));
-			Model::exec("INSERT INTO t_solicitacao_reset_senha (dt_solicitacao, ds_codigo, dt_validade, ic_ativo, id_usuario) values (?, ?, ?, ?, ?)", [$agora->format('Y-m-d H:i:s'),  $ds_codigo, $validade->format('Y-m-d H:i:s'), 'S', $usuario[0]["id_usuario"]]);
+			Model::exec("INSERT INTO solicitacao_reset_senha (dt_solicitacao, ds_codigo, dt_validade, ic_ativo, id_usuario) values (?, ?, ?, ?, ?)", [$agora->format('Y-m-d H:i:s'),  $ds_codigo, $validade->format('Y-m-d H:i:s'), 'S', $usuario[0]["id_usuario"]]);
 			Permit::setTokenCredentials(false);
 			$comunicado = new Comunicado();
 			$id_comunicado = $comunicado->criar(COMUNICADO_NOVA_SENHA, [$usuario[0]["id_usuario"]], [], ['ds_link' => CONFIG_BASEURL_CLIENT . "ResetSenha.php?h=" . $ds_codigo]);

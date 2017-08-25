@@ -240,6 +240,13 @@ class Model{
 		return $fetch_all? $stm->fetchAll(PDO::FETCH_ASSOC) : $stm->fetch(PDO::FETCH_ASSOC);
 	}
 
+	static public function countQuery($query, $bind = []){
+		$count_query = preg_replace('/SELECT\s*(.+?)\s*FROM/is', 'SELECT COUNT(*) AS total FROM', $query, 1);
+
+		$count = Model::search($count_query, $bind, false);
+		return $count? $count['total']: 0;
+	}
+
 	private function getPrimaryWhere($primary){
 		$primary_composed = is_array($this->primary);
 

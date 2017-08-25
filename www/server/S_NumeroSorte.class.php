@@ -18,7 +18,7 @@ class S_NumeroSorte{
 	}
 
 	private function getExceptions(){
-	    return array_merge(array_column(Model::search("SELECT id_numero FROM t_numero_da_sorte", []), "id_numero"), $this->numeros_alocados);
+	    return array_merge(array_column(Model::search("SELECT id_numero FROM numero_da_sorte", []), "id_numero"), $this->numeros_alocados);
 	}
 
 	// Processar números da sorte sem saldo, mas a partir da qtd de números originais
@@ -26,8 +26,8 @@ class S_NumeroSorte{
 		global $mypdo;
 		$valorNumeroDaSorte = VALOR_NUMERO_DA_SORTE;
 		$valorMaximoCupomAprovado = VALOR_MAXIMO_CUPOM_APROVADO;
-		Model::exec("UPDATE t_cupom SET ic_status = 'A' WHERE ic_status = 'P' and id_usuario = ? and vl_cupom <= ?", [$id_usuario, $valorMaximoCupomAprovado]);
-		$cupons = Model::search("SELECT id_cupom, cd_cupom, DATE_FORMAT(dt_cupom, '%d/%m/%Y') as dt_compra, vl_cupom, vl_cupom as vl_compra, vl_disponivel, ic_cartao, case when ic_cartao = 'S' then 'Sim' else 'Não' end ds_ic_cartao FROM t_cupom WHERE id_usuario = ? and ic_status = 'A' and vl_disponivel > 0 order by 3", [$id_usuario]);
+		Model::exec("UPDATE cupom SET ic_status = 'A' WHERE ic_status = 'P' and id_usuario = ? and vl_cupom <= ?", [$id_usuario, $valorMaximoCupomAprovado]);
+		$cupons = Model::search("SELECT id_cupom, cd_cupom, DATE_FORMAT(dt_cupom, '%d/%m/%Y') as dt_compra, vl_cupom, vl_cupom as vl_compra, vl_disponivel, ic_cartao, case when ic_cartao = 'S' then 'Sim' else 'Não' end ds_ic_cartao FROM cupom WHERE id_usuario = ? and ic_status = 'A' and vl_disponivel > 0 order by 3", [$id_usuario]);
 		array_walk($cupons, function(&$row){
 			$row['vl_compra'] = "R$ " . number_format($row['vl_compra'], 2, ',', '.');
 		});
@@ -53,7 +53,7 @@ class S_NumeroSorte{
 					}
 					$nGeradosCupom *= 2;
 				}
-				Model::exec("UPDATE t_cupom SET vl_disponivel = 0 WHERE id_cupom = ?", [$cupons[$i]["id_cupom"]]);
+				Model::exec("UPDATE cupom SET vl_disponivel = 0 WHERE id_cupom = ?", [$cupons[$i]["id_cupom"]]);
 				$comunicado = new Comunicado();
 				$id_comunicado = $comunicado->criar(COMUNICADO_CUPOM_RECEBIDO, [$id_usuario], [], ['cd_cupom' => $cupons[$i]["cd_cupom"], 'dt_compra' => $cupons[$i]["dt_compra"], 'vl_compra' => $cupons[$i]["vl_compra"], 'ds_ic_cartao' => $cupons[$i]["ds_ic_cartao"], 'qt_numeros' => $nGeradosCupom]);
 			}
@@ -63,10 +63,10 @@ class S_NumeroSorte{
 			$ultimoNumeroAtualizado = 0;
 			foreach ($relacao as $item){
 				$valores = explode("|", $item);
-				Model::exec("INSERT INTO t_cupom_numero_da_sorte (id_usuario, id_cupom, id_numero, vl_cupom, dt_cadastro) VALUES (?, ?, ?, ?, ?)", [$id_usuario, $valores[1], $valores[0], $valores[2], $dsAgora]);
+				Model::exec("INSERT INTO cupom_numero_da_sorte (id_usuario, id_cupom, id_numero, vl_cupom, dt_cadastro) VALUES (?, ?, ?, ?, ?)", [$id_usuario, $valores[1], $valores[0], $valores[2], $dsAgora]);
 				
 				if ($ultimoNumeroAtualizado != $valores[0]) {
-					Model::exec("INSERT IGNORE INTO t_numero_da_sorte (id_numero, id_usuario, dt_cadastro) VALUES (?, ?, ?)", [$valores[0], $id_usuario, $dsAgora]);
+					Model::exec("INSERT IGNORE INTO numero_da_sorte (id_numero, id_usuario, dt_cadastro) VALUES (?, ?, ?)", [$valores[0], $id_usuario, $dsAgora]);
 				}
 			}
 		});
@@ -78,13 +78,13 @@ class S_NumeroSorte{
 		global $mypdo;
 		$valorNumeroDaSorte = VALOR_NUMERO_DA_SORTE;
 		$valorMaximoCupomAprovado = VALOR_MAXIMO_CUPOM_APROVADO;
-		$pendentes = Model::search("SELECT cn.id_usuario, cn.id_cupom, cn.dt_cadastro, cn.id_numero from t_cupom_numero_da_sorte cn inner join t_cupom c on cn.id_cupom = c.id_cupom left join t_numero_da_sorte n on cn.id_numero = n.id_numero where cn.id_usuario <> n.id_usuario", []);
+		$pendentes = Model::search("SELECT cn.id_usuario, cn.id_cupom, cn.dt_cadastro, cn.id_numero from cupom_numero_da_sorte cn inner join cupom c on cn.id_cupom = c.id_cupom left join numero_da_sorte n on cn.id_numero = n.id_numero where cn.id_usuario <> n.id_usuario", []);
 		$mypdo->transaction(function() use($pendentes){
 			for ($i = 0; $i < count($pendentes); $i++) {
 				$numeroSorte = $this->gerarNumeroDaSorte();
-				$stm = Model::exec("INSERT IGNORE INTO t_numero_da_sorte (id_numero, id_usuario, dt_cadastro) VALUES (?, ?, ?)", [$numeroSorte, $pendentes[$i]["id_usuario"], $pendentes[$i]["dt_cadastro"]]);
+				$stm = Model::exec("INSERT IGNORE INTO numero_da_sorte (id_numero, id_usuario, dt_cadastro) VALUES (?, ?, ?)", [$numeroSorte, $pendentes[$i]["id_usuario"], $pendentes[$i]["dt_cadastro"]]);
 				if ($stm->rowCount() > 0) {
-					Model::exec("UPDATE t_cupom_numero_da_sorte SET id_numero = ? WHERE id_numero = ? and id_cupom = ? and id_usuario = ? and dt_cadastro = ?", [$numeroSorte, $pendentes[$i]["id_numero"], $pendentes[$i]["id_cupom"], $pendentes[$i]["id_usuario"], $pendentes[$i]["dt_cadastro"]]);
+					Model::exec("UPDATE cupom_numero_da_sorte SET id_numero = ? WHERE id_numero = ? and id_cupom = ? and id_usuario = ? and dt_cadastro = ?", [$numeroSorte, $pendentes[$i]["id_numero"], $pendentes[$i]["id_cupom"], $pendentes[$i]["id_usuario"], $pendentes[$i]["dt_cadastro"]]);
 				}
 			}
 		});

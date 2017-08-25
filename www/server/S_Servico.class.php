@@ -15,7 +15,7 @@ class S_Servico {
 		$ic_esta_comigo = false;
 
 		try{
-			$query = "UPDATE t_agenda_servico set ic_em_execucao = 'S' where cd_servico = ? and ic_em_execucao = 'N'";
+			$query = "UPDATE agenda_servico set ic_em_execucao = 'S' where cd_servico = ? and ic_em_execucao = 'N'";
 			$oStatus = Model::exec($query, [$this->cd_servico]);
 			if ($oStatus->rowCount() > 0) {
 				$ic_esta_comigo = true;
@@ -35,7 +35,7 @@ class S_Servico {
 		}
 		finally {
 			if ($ic_esta_comigo === true) {
-				$query = "UPDATE t_agenda_servico set ic_em_execucao = 'N' where cd_servico = ?";
+				$query = "UPDATE agenda_servico set ic_em_execucao = 'N' where cd_servico = ?";
 				$oStatus = Model::exec($query, [$this->cd_servico]);
 				$this->logAgendaServico($this->cd_servico, SERVICO_STATUS_FINALIZADO, "Término do processamento.");
 			}
@@ -45,7 +45,7 @@ class S_Servico {
 
 	protected function logAgendaServico($cd_servico, $id_status, $ds_status, $id_erro = NULL) {
 		$now = new DateTime('now', new DateTimeZone( 'America/Sao_Paulo' ) );
-		$query = "INSERT INTO t_agenda_servico_log (dt_evento, cd_servico, id_Servico_status, ds_status, id_erro) values (?, ?, ?, ?, ?)";
+		$query = "INSERT INTO agenda_servico_log (dt_evento, cd_servico, id_Servico_status, ds_status, id_erro) values (?, ?, ?, ?, ?)";
 		Model::exec($query, [$now->format('Y-m-d H:i:s'), $cd_servico, $id_status, $ds_status, $id_erro]);
 	}
 
@@ -54,8 +54,8 @@ class S_Servico {
 		try{
 			$query = "SELECT c.id_comunicado, c.id_tipo_comunicado, c.dt_comunicado_agendado, c.ds_parametros, 
 						tc.ds_assunto_email, tc.ic_periodicidade, tc.nr_index_periodicidade, tc.ds_template_url
-						from t_comunicado c 
-						inner join t_tipo_comunicado tc
+						from comunicado c 
+						inner join tipo_comunicado tc
 						on c.id_tipo_comunicado = tc.id_tipo_comunicado 
 						where tc.ic_periodicidade = ? and tc.nr_index_periodicidade = 0 and c.dt_comunicado_envio is null order by c.id_comunicado";
 			$fila = Model::search($query, [$ic_periodicidade]);

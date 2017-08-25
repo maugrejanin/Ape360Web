@@ -12,7 +12,7 @@ class S_RelTriagem{
 				dt_cupom, 
 				dt_cadastro, 
 				nm_arquivo
-			FROM t_cupom c
+			FROM cupom c
 			WHERE ic_status = ?", [
 				CUPOM_STATUS_PENDENTE
 			]
@@ -26,7 +26,7 @@ class S_RelTriagem{
 
 		return $mypdo->transaction(function() use($id_cupom){
 
-			$record_cupom = Model::search("SELECT id_usuario FROM t_cupom WHERE id_cupom = ?", [$id_cupom], false);
+			$record_cupom = Model::search("SELECT id_usuario FROM cupom WHERE id_cupom = ?", [$id_cupom], false);
 
 			if(!$record_cupom)
 				throw new Ex_User('Cupom não encontrado');
@@ -60,7 +60,7 @@ class S_RelTriagem{
 		if(!$this->validStatus($new_status))
 			return false;
 
-		return Model::exec("UPDATE t_cupom SET ic_status = ? WHERE id_cupom = ?", [
+		return Model::exec("UPDATE cupom SET ic_status = ? WHERE id_cupom = ?", [
 			$new_status, 
 			$id_cupom
 		]);

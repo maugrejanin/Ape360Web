@@ -16,12 +16,12 @@ class S_Dashboard{
 					SUM(vl_cupom) AS vl_total,
 					SUM(vl_cupom)/COUNT(*) AS vl_medio,
 					SUM(MOD(vl_cupom, 50)) AS vl_remain
-				FROM t_cupom", [], false
+				FROM cupom", [], false
 			) +
 			Model::search(
 				"SELECT 
 					COUNT(*) AS qt_usuario
-				FROM t_usuario
+				FROM usuario
 				WHERE id_usuario_perfil NOT IN (?, ?)", [
 					PERMIT_ADMIN, 
 					PERMIT_TECHNICIAN
@@ -30,7 +30,7 @@ class S_Dashboard{
 			Model::search(
 				"SELECT 
 					COUNT(*) AS qt_numero
-				FROM t_numero_da_sorte", [], false
+				FROM numero_da_sorte", [], false
 			);
 
 		return compact('macro_data');

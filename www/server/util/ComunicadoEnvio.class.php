@@ -30,7 +30,7 @@ class ComunicadoEnvio {
 						t_comunicado_destinatario cd
 					ON 
 						c.id_comunicado = cd.id_comunicado
-					INNER JOIN t_usuario u
+					INNER JOIN usuario u
 					ON 
 						cd.id_usuario = u.id_usuario 
 					WHERE 
@@ -51,8 +51,8 @@ class ComunicadoEnvio {
 			$mailSent = $mymail->SendMail($assunto_email, CONFIG_BASEURL_CLIENT . "/" . $item["ds_template_url"] . "?id_comunicado=" . $item["id_comunicado"] . "&id_usuario=" . $item["id_usuario"], "", "");
 
 			if ($mailSent === true) {			
-				// $query = "UPDATE t_comunicado_destinatario SET dt_comunicado_envio = ? WHERE id_comunicado = ? and id_usuario = ?";
-				$query = "UPDATE t_comunicado_destinatario SET dt_comunicado_envio = ?, ds_email_enviado = ? WHERE id_comunicado = ? and id_usuario = ?";
+				// $query = "UPDATE comunicado_destinatario SET dt_comunicado_envio = ? WHERE id_comunicado = ? and id_usuario = ?";
+				$query = "UPDATE comunicado_destinatario SET dt_comunicado_envio = ?, ds_email_enviado = ? WHERE id_comunicado = ? and id_usuario = ?";
 				$myCommand = $mypdo->prepare($query); 
 				
 				$dtEnvio = new DateTime("now", new DateTimeZone( 'America/Sao_Paulo' ) );
@@ -69,7 +69,7 @@ class ComunicadoEnvio {
 		// Autoload::register();
 		if ($rows_affected == count($comunicado)) {
 			$dtEnvio = new DateTime("now", new DateTimeZone( 'America/Sao_Paulo' ) );
-			$query = "UPDATE t_comunicado SET dt_comunicado_envio = ? WHERE id_comunicado = ? ";
+			$query = "UPDATE comunicado SET dt_comunicado_envio = ? WHERE id_comunicado = ? ";
 			$myCommand = $mypdo->prepare($query); 
 			
 			$dtEnvio = new DateTime("now", new DateTimeZone( 'America/Sao_Paulo' ) );
@@ -89,8 +89,8 @@ class ComunicadoEnvio {
 		$query = 
 				"SELECT 
 				u.id_usuario, u.ds_email, u.ds_nome, u.ds_sobrenome, u.ds_telefone, u.id_usuario_perfil, cd.hash_comunicado as hash
-				FROM t_usuario u
-				INNER JOIN t_comunicado_destinatario cd
+				FROM usuario u
+				INNER JOIN comunicado_destinatario cd
 				WHERE u.id_usuario = cd.id_usuario
 				AND cd.id_comunicado = ?
 				AND cd.id_usuario = ?
@@ -108,7 +108,7 @@ class ComunicadoEnvio {
 		$query = 
 				"SELECT 
 				ds_parametros
-				FROM t_comunicado c
+				FROM comunicado c
 				WHERE c.id_comunicado = ?";
 
 		$stm = $mypdo->prepare($query);
@@ -140,7 +140,7 @@ class ComunicadoEnvio {
 		}
 		$agora = new DateTime("now", new DateTimeZone( 'America/Sao_Paulo' ) );
 		$query = 
-				"UPDATE t_comunicado_destinatario set " . $campo . " = ? where hash_comunicado = ? and " . $campo . " is NULL";
+				"UPDATE comunicado_destinatario set " . $campo . " = ? where hash_comunicado = ? and " . $campo . " is NULL";
 		$stm = $mypdo->prepare($query);
 		$stm->execute([$agora->format('Y-m-d H:i:s'), $hash]);
 	}

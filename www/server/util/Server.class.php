@@ -14,7 +14,7 @@ class Server{
 			$controller_class_name = 'S_' . ucfirst($controller);
 			self::$callback = $callback;
 
-			Permit::verify($controller_class_name, $action, $get);
+			// Permit::verify($controller_class_name, $action, $get);
 			$server = new $controller_class_name();
 
 			self::sendDataToClient(
@@ -76,7 +76,7 @@ class Server{
 		self::sendDataToClient($data_error);
 	}
 
-	static private function sendDataToClient($data){
+	static public function sendDataToClient($data){
 		if (ob_get_length())
 			ob_clean();
 

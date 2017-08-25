@@ -43,9 +43,9 @@ class S_Cupom{
 			        ELSE 'NF eletrônica'
 			    END ds_tipo
 			FROM
-			    t_cupom c
+			    cupom c
 			        INNER JOIN
-			    t_cupom_status s ON c.ic_status = s.ic_cupom_status
+			    cupom_status s ON c.ic_status = s.ic_cupom_status
 			WHERE
 			    c.id_usuario = ? AND 
 			    c.ic_status <> ?
@@ -61,11 +61,11 @@ class S_Cupom{
 			    LPAD(ns.id_numero, 7, '0') ds_numero,
 			    cns.id_cupom
 			FROM
-			    t_numero_da_sorte ns
+			    numero_da_sorte ns
 			        INNER JOIN
-			    t_cupom_numero_da_sorte cns ON cns.id_numero = ns.id_numero
+			    cupom_numero_da_sorte cns ON cns.id_numero = ns.id_numero
 			    	INNER JOIN
-			    t_cupom c ON c.id_cupom = cns.id_cupom
+			    cupom c ON c.id_cupom = cns.id_cupom
 			WHERE
 			    ns.id_usuario = ? AND 
 			    c.ic_status <> ?", [
@@ -141,7 +141,7 @@ class S_Cupom{
 				'dt_cupom' => 'O campo <b>DATA</b> deve não pode ser uma data futura.'
 			]);
 		if ($data_insert['tp_cupom'] != "F") {
-			$existe = Model::search("SELECT 1 as existe FROM t_cupom c WHERE c.id_usuario = ? and c.cd_cupom = ? and c.dt_cupom = ? and ic_status in ('P', 'A')", [$user_log->id_usuario, $data_insert['cd_cupom'], $data_insert['dt_cupom']]);
+			$existe = Model::search("SELECT 1 as existe FROM cupom c WHERE c.id_usuario = ? and c.cd_cupom = ? and c.dt_cupom = ? and ic_status in ('P', 'A')", [$user_log->id_usuario, $data_insert['cd_cupom'], $data_insert['dt_cupom']]);
 		}
 		else {
 			$existe = [];

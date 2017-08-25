@@ -79,7 +79,7 @@ class MyPDO extends \PDO{
 			);
 			$dtErro = new DateTime("now", new DateTimeZone( 'America/Sao_Paulo' ) );
 			$idUsuario = (isset($_SESSION["UsrId"]) ? $_SESSION["UsrId"] : (isset($_SESSION["id_usuario"]) ? $_SESSION["id_usuario"] : null));
-			$errCmd = $errPdo->prepare('INSERT INTO t_erro (dt_erro, id_usuario, ds_message, id_code, nm_file, nr_line, ds_trace, ip_usuario, ds_post) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
+			$errCmd = $errPdo->prepare('INSERT INTO erro (dt_erro, id_usuario, ds_message, id_code, nm_file, nr_line, ds_trace, ip_usuario, ds_post) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
 			$paramNum = 1;
 			$errCmd->bindValue($paramNum++, $dtErro->format('Y-m-d H:i:s'));
 			$errCmd->bindValue($paramNum++, $idUsuario);
@@ -104,7 +104,7 @@ class MyPDO extends \PDO{
 			global $mypdo;
 			try {
 				$now = new DateTime('now', new DateTimeZone( 'America/Sao_Paulo' ) );
-				$myCommand = $mypdo->prepare('INSERT INTO t_log_acao (dt_log_acao, id_usuario, nm_evento, nm_pagina, ds_log_acao) values (?,?,?,?,?)'); 
+				$myCommand = $mypdo->prepare('INSERT INTO log_acao (dt_log_acao, id_usuario, nm_evento, nm_pagina, ds_log_acao) values (?,?,?,?,?)'); 
 				$myCommand->bindValue(1, $now->format('Y-m-d H:i:s'));
 				$myCommand->bindValue(2, $_SESSION['UsrId']);
 				$myCommand->bindValue(3, $nomeEvento);

@@ -1,5 +1,9 @@
 <style type="text/css">
 
+	#role_action_form .panel-title{
+		display: inline-block;
+	}
+
 	.no-action-server-msg{
 		margin-left: 25px;
 		margin-right: 25px;
@@ -17,10 +21,17 @@
 	}
 
 	#permission_nav_tabs > li{
-		width: 50%;
 		text-align: center;
 		font-weight: bold;
 		text-transform: uppercase;
+	}
+
+	#permission_nav_tabs > li{
+		width: 33.3%;
+	}
+
+	#permission_nav_tabs > li:last-child{
+		width: 33.4%;
 	}
 
 	#permission_nav_tabs > li > a{
@@ -40,7 +51,7 @@
 		font-weight: bold;
 	}
 
-	.check-server-init{
+	.check-server-init:not(#user_action_form .check-server-init){
  	    margin: 3px 15px 0 3px!important;
     	float: left;
     }
@@ -58,6 +69,20 @@
 	#select_profile_container{
 		margin-bottom: -10px;
 	}
+
+	.user-init-check-content input[type=checkbox] {
+		vertical-align: middle;
+		margin-top: 0px;
+	}
+
+	.user-init-check-content{
+		display: inline-block;
+		width: 100px;
+	}
+
+	.user-init-checks-container{
+		margin-top: 10px;
+	}
 </style>
 
 <div class="col-lg-12">
@@ -72,13 +97,16 @@
 		<li role="presentation">
 			<a href="#role_relation" aria-controls="role_relation" role="tab" data-toggle="tab">Roles</a>
 		</li>
+		<li role="presentation">
+			<a href="#user_relation" aria-controls="user_relation" role="tab" data-toggle="tab">Usuários</a>
+		</li>
 	</ul>
 
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane active panel-tab-container" id="profile_relation">
 			<form id="role_form">
 				<div class="select-container" id="select_profile_container">
-					<div class="form-group">
+					<div access-action="permit.getprofileroles" class="form-group">
 						<label for="id_usuario_perfil">Perfis</label>
 						<div>
 							<select name="id_usuario_perfil" id="id_usuario_perfil"></select>
@@ -87,8 +115,8 @@
 				</div>
 				<div id="check_role_container">
 					<div id="role_profile_toolbar">
-						<button type="button" id="btn_submit_roles" class="btn">Salvar</button>
-						<button type="button" id="btn_new_profile" class="btn">Novo perfil</button>
+						<button access-action="permit.persistroles" type="button" id="btn_submit_roles" class="btn">Salvar</button>
+						<button access-action="permit.createprofile" type="button" id="btn_new_profile" class="btn">Novo perfil</button>
 					</div>
 
 					<table id="role_table" data-toolbar="#role_profile_toolbar">
@@ -104,43 +132,58 @@
 			</form>
 		</div>
 		<div role="tabpanel" class="tab-pane panel-tab-container" id="role_relation">
-			<form id="action_form">
+			<form id="role_action_form">
 				<div class="select-container" id="select_role_container">
-					<div class="form-group">
+					<div access-action="permit.getactions" class="form-group">
 						<label for="id_role">Roles</label>
 						<div>
 							<select name="id_role" id="id_role"></select>
 						</div>
 					</div>
 					<div class="form-group">
-						<div id="role_description"></div>
-					</div>
-					<div class="form-group">
-						<button type="button" class="btn btn-submit-actions">Salvar</button>
-						<button type="button" id="btn_new_role" class="btn">Nova role</button>
-						<button type="button" id="btn_collapse_all" class="btn expand">Expandir todos</button>
+						<button access-action="permit.persistactions" type="button" class="btn btn-role-submit-actions">Salvar</button>
+						<button access-action="permit.createrole" type="button" id="btn_new_role" class="btn">Nova role</button>
 					</div>
 				</div>
-				<div id="check_action_container">
+				<div id="check_role_action_container">
 					
 				</div>
 				<div class="form-group">
-					<button type="button" class="btn btn-submit-actions">Salvar</button>
+					<button  type="button" class="btn btn-role-submit-actions">Salvar</button>
+				</div>
+			</form>
+		</div>
+		<div role="tabpanel" class="tab-pane panel-tab-container" id="user_relation">
+			<form id="user_action_form">
+				<div class="select-container" id="select_user_container">
+					<div access-action="permit.getuserpermits" class="form-group">
+						<div>
+							<button type="button" class="btn" id="btn_usuario">Usuário</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<button access-action="permit.persistuseractions" type="button" class="btn btn-user-submit-actions">Salvar</button>
+					</div>
+				</div>
+				<div id="check_user_action_container">
+					
+				</div>
+				<div class="form-group">
+					<button access-action="permit.persistuseractions" type="button" class="btn btn-user-submit-actions">Salvar</button>
 				</div>
 			</form>
 		</div>
 	</div>
-
 </div>
 
 <div id="panel_role_html" class="hidden-html">
 	<div class="panel panel-default panel-role-action">
 		<div id="headingOne" class="panel-heading" role="tab">
 			<h4 class="panel-title">
-				<a role="button" class="collapsed" data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne"></a>
+				<a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
 			</h4>
 		</div>
-		<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+		<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 			<div class="panel-body">
 				<p class="server-description"></p>
 			</div>
@@ -149,6 +192,32 @@
 				<thead>
 					<tr>
 						<th data-field="id_permissao" data-formatter="Permit.treatCheckAction">Permissão concedida</th>
+						<th data-field="ds_titulo" data-sort="true">Nome</th>
+						<th data-field="ds_permissao" data-sort="true">Descrição</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div id="panel_user_html" class="hidden-html">
+	<div class="panel panel-default panel-role-action">
+		<div id="headingOne" class="panel-heading" role="tab">
+			<h4 class="panel-title">
+				<a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
+			</h4>
+		</div>
+		<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+			<div class="panel-body">
+				<p class="server-description"></p>
+			</div>
+
+			<table class="action-server-table">
+				<thead>
+					<tr>
+						<th data-field="id_permissao" data-formatter="Permit.treatCheckAction">Permissão de perfil</th>
+						<th data-field="id_permissao" data-formatter="Permit.treatCheckUserPermit">Permissão de usuário</th>
 						<th data-field="ds_titulo" data-sort="true">Nome</th>
 						<th data-field="ds_permissao" data-sort="true">Descrição</th>
 					</tr>
@@ -180,7 +249,7 @@
 		<div class="form-group">
 			<label for="ds_role">Descrição</label>
 			<div>
-				<textarea required class="form-control" name="ds_role" id="ds_role"></textarea>
+				<textarea class="form-control" name="ds_role" id="ds_role"></textarea>
 			</div>
 		</div>
 	</form>
@@ -188,4 +257,30 @@
 
 <div id="no_action_server" class="hidden-html">
 	<div class="well no-action-server-msg">Não há permissões a serem concedidas nessa página</div>
+</div>
+
+<div id="server_init_checks" class="hidden-html">
+	<div class="user-init-checks-container">
+		<div class="user-init-check-content">
+			<span>Perfil: </span>
+			<input type="checkbox" disabled class="server-action-check check-server-init">
+		</div>
+		<div class="user-init-check-content">
+			<span>Usuário: </span>
+			<input type="checkbox" class="server-user-action-check check-server-init-user">
+		</div>
+	</div>
+</div>
+
+<div id="user_table_html" class="hidden-html">
+	<table id="user_table">
+		<thead>
+			<tr>
+				<th data-field="state" data-radio="true"></th>
+				<th data-field="id_usuario" data-sortable="true">ID. Usuário</th>
+				<th data-field="nm_usuario_perfil" data-sortable="true">Perfil</th>
+				<th data-field="ds_nome" data-sortable="true">Nome</th>
+			</tr>
+		</thead>
+	</table>
 </div>

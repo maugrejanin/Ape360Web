@@ -2,9 +2,9 @@
 
 const
 	CONFIG_DB_HOST = "db-erkr-small-01.chdryemrlq7b.sa-east-1.rds.amazonaws.com",
-	CONFIG_DB_NAME = "db_hering_dev",
-	CONFIG_DB_USER = "hering2016_site",
-	CONFIG_DB_PWD = "H3r1ng2016!",
+	CONFIG_DB_NAME = "db_ape360_dev",
+	CONFIG_DB_USER = "ape360_dev",
+	CONFIG_DB_PWD  = "EuS2Eurekaria123$",
 
 	// CONFIG_DB_HOST = "localhost",
 	// CONFIG_DB_NAME = "db_hering_dev",
@@ -48,7 +48,7 @@ const
 	CONFIG_COOKIE_LIFETIME = 86400,
 	CONFIG_PROTOCOL = "http",
 	CONFIG_DOMAIN = 'eurekaria.git',
-	CONFIG_ROOT_PATH = 'hering/www/';
+	CONFIG_ROOT_PATH = 'Ape360Web/www/';
 	// CONFIG_PROTOCOL = "https",
 	// CONFIG_DOMAIN = 'apps.eurekaria.com',
 	// CONFIG_ROOT_PATH = 'hering/www/';

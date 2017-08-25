@@ -14,8 +14,8 @@ class S_RelNumeroSorte{
 				c.dt_cadastro, 
 				c.nm_arquivo, 
 				c.ic_status 
-			FROM t_cupom_numero_da_sorte cns
-			INNER JOIN t_cupom c ON c.id_cupom = cns.id_cupom
+			FROM cupom_numero_da_sorte cns
+			INNER JOIN cupom c ON c.id_cupom = cns.id_cupom
 			GROUP BY c.id_cupom"
 		);
 

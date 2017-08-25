@@ -18,6 +18,7 @@ class Request{
 		global $__post;
 
         extract(parse_url($url));//scheme, host, port, user, pass, path, query, fragment
+        //var_dump(CONFIG_SERVER_PATH, $path);exit;
 		$path = str_replace(CONFIG_SERVER_PATH, '', $path);
 
 		if(isset($query))

@@ -84,17 +84,50 @@ final class Permit{
 
 		$server_name = substr($controller_class_name, 2);
 
-		$permission_name = self::getPermitName(
+		$permission_name = self::getActionName(
 			$server_name,
 			mb_strtolower($action_method_name) == INIT_ACTION? $server_name: $action_method_name 
 		);
 
 		$has_permit = (boolean)Model::search("
-			SELECT p.* FROM t_permissao p
-			INNER JOIN t_permissao_role pr ON p.id_permissao = pr.id_permissao
-			INNER JOIN t_role_perfil ru ON ru.id_role = pr.id_role
-			INNER JOIN t_usuario u ON u.id_usuario_perfil = ru.id_usuario_perfil
-			WHERE u.id_usuario = :id_usuario AND p.nm_permissao = :nm_permissao
+			SELECT 
+			    p.id_permissao
+			FROM
+			   permissao p
+			        INNER JOIN
+			   permissao_role pr ON p.id_permissao = pr.id_permissao
+			        INNER JOIN
+			   role_perfil rp ON rp.id_role = pr.id_role
+			        INNER JOIN
+			   usuario u ON u.id_usuario_perfil = rp.id_usuario_perfil 
+			   		INNER JOIN
+			   role_usuario ru ON ru.id_role = pr.id_role AND ru.id_usuario = u.id_usuario
+			        LEFT JOIN
+			   permissao_usuario pu ON pu.id_usuario = u.id_usuario
+			WHERE
+			    u.id_usuario = :id_usuario
+			        AND p.nm_permissao = :nm_permissao
+			        AND pu.id_permissao IS NULL 
+			UNION SELECT 
+			    pu.id_permissao
+			FROM
+			   permissao_usuario pu
+			        INNER JOIN
+			   permissao p ON p.id_permissao = pu.id_permissao
+			WHERE
+			    pu.id_usuario = :id_usuario
+			        AND p.nm_permissao = :nm_permissao
+			        AND pu.ic_concessao = 'S'
+			UNION SELECT p.nm_permissao
+	            FROM
+	               permissao p
+	               INNER JOIN
+	               permissao_role pr ON p.id_permissao = pr.id_permissao
+	               INNER JOIN
+	               role_usuario ru ON ru.id_role = pr.id_role
+	            WHERE
+	               ru.id_usuario = :id_usuario
+	               AND p.nm_permissao = :nm_permissao
 		", [
 			'id_usuario' => $user_log->id_usuario,
 			'nm_permissao' => $permission_name
@@ -104,21 +137,12 @@ final class Permit{
 			throw new Exception("Vaza parça! :) daqui: " . $permission_name);
 	}
 
+	private static function getActionName($server_name, $action_method_name){
+		return mb_strtolower($server_name . ACTION_SERVER_CHAR_SEPARATOR . $action_method_name);
+	}
+
 	public static function getToken(){
 		return self::$token;
-	}
-
-	public static function getPermitName($server_name, $action_method_name){
-		return self::getServerName($server_name) . ACTION_SERVER_CHAR_SEPARATOR . self::getActionName($action_method_name);
-	}
-
-	static public function getServerName($server){
-		$parts = explode('_', $server);
-		return mb_strtolower(array_pop($parts));
-	}
-
-	static public function getActionName($action){
-		return mb_strtolower($action);
 	}
 
 }

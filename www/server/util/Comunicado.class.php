@@ -9,7 +9,7 @@ class Comunicado extends ComunicadoEnvio {
 		if (!empty($user_log) && !empty($user_log->id_usuario)) {
 			$id_usuario_criacao = $user_log->id_usuario;
 		}
-		$query = "SELECT id_tipo_comunicado, ic_periodicidade FROM t_tipo_comunicado WHERE id_tipo_comunicado = ?";
+		$query = "SELECT id_tipo_comunicado, ic_periodicidade FROM tipo_comunicado WHERE id_tipo_comunicado = ?";
 		$myCommand = $mypdo->prepare($query); 
 		$bind = [ $id_tipo_comunicado ];
 		$myCommand->execute($bind);
@@ -19,7 +19,7 @@ class Comunicado extends ComunicadoEnvio {
 			return 0;
 		}
 
-		$query = "INSERT INTO t_comunicado (
+		$query = "INSERT INTO comunicado (
 						id_tipo_comunicado,
 						dt_comunicado_agendado,
 						dt_comunicado_envio,
@@ -38,7 +38,7 @@ class Comunicado extends ComunicadoEnvio {
 		$myCommand->execute($bind);
 		$id_comunicado = $mypdo->lastInsertId();
 
-		$query_destinatarios = "INSERT INTO t_comunicado_destinatario (id_comunicado, id_usuario, ic_bcc, hash_comunicado) values ";
+		$query_destinatarios = "INSERT INTO comunicado_destinatario (id_comunicado, id_usuario, ic_bcc, hash_comunicado) values ";
 		$bind = [];
 		$primeiro = true;
 		foreach ($id_destinatarios as $destinatario) {

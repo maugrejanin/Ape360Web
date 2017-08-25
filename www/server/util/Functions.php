@@ -173,6 +173,19 @@ function require_post(){
 	return array_sub_order($_POST, $args);
 }
 
+function require_request(){
+   $args = is_array( func_get_arg(0) )? func_get_arg(0) : func_get_args();
+   $not_set = [];
+
+   foreach ($args as $value)
+       if( !isset($_REQUEST[$value]) )
+           $not_set[] = $value;
+
+   if(!empty($not_set))
+       throw new Exception("As informações fornecidas são insuficientes. Está faltando: " . implode(", ", $not_set));
+
+   return array_sub_order($_REQUEST, $args);
+}
 
 //explain: http://php.net/manual/pt_BR/features.file-upload.multiple.php#53240
 function file_reorder(&$file_post) {
@@ -260,3 +273,4 @@ function get_numeric($val) {
 	} 
 	return $val; 
 } 
+

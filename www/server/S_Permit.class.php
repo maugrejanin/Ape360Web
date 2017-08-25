@@ -7,71 +7,26 @@
 
 class S_Permit{
 
-	private $comment_db_fields = [//!!!implement dynamic fields
-		'title' => [
-			'db_name' => 'nm_permissao',
-			'default_value' => NULL
-		],
-		'description' => [
-			'db_name' => 'ds_permissao',
-			'default_value' => NULL
-		],
-		'restriction' => [
-			'db_name' => 'tp_restricao',
-			'default_value' => 'R'
-		]
-	];
-
 	public function init(){
-		$role_data = $this->getRoleData();
+		global $user_log;
+
+		$role_list = $this->getRoleList();
 		$profile_list = $this->getProfileList();
 		$data_roles = $this->getRoles();
 		$data_actions = $this->getActions();
 
-		return compact('data_actions', 'data_roles', 'role_data', 'profile_list');
-	}
-
-	private function getActionsAdmin(){
-		$data_action = Model::search(
-			"SELECT 
-				id_permissao,
-				ds_titulo,
-				ds_permissao,
-				tp_restricao,
-				SUBSTRING_INDEX(nm_permissao, '.', 1) AS server,
-				SUBSTRING_INDEX(nm_permissao, '.', -1) AS action
-			FROM t_permissao p");
-
-		return array_map(function(array $actions){
-			return array_key_column($actions, 'action');
-		}, array_group($data_action, 'server'));
+		return compact('data_actions', 'data_roles', 'role_list', 'profile_list');
 	}
 
 	private function getActions(){
-		global $user_log;
-
-		if($user_log->id_usuario_perfil == ID_PROFILE_TECNICO)
-			return $this->getActionsAdmin();
-
 		$data_action = Model::search(
 			"SELECT 
 				id_permissao,
 				ds_titulo,
 				ds_permissao,
-				tp_restricao,
 				SUBSTRING_INDEX(nm_permissao, '.', 1) AS server,
 				SUBSTRING_INDEX(nm_permissao, '.', -1) AS action
-			FROM t_permissao p
-			WHERE 
-				tp_restricao <> :tech_restriction AND (
-					SELECT p2.id_permissao FROM t_permissao p2 
-					WHERE 
-					p2.nm_permissao = CONCAT(SUBSTRING_INDEX(p.nm_permissao, :action_separator, 1), :action_separator, SUBSTRING_INDEX(p.nm_permissao, :action_separator, 1)) AND
-					p2.tp_restricao = :tech_restriction
-				) IS NULL", [
-				':tech_restriction' => TYPE_RESTRICT_ACTION_TECH,
-				':action_separator' => ACTION_SERVER_CHAR_SEPARATOR
-			]);
+			FROM permissao");
 
 		return array_map(function(array $actions){
 			return array_key_column($actions, 'action');
@@ -80,26 +35,167 @@ class S_Permit{
 
 	private function getRoles(){
 		return Model::search(
-			"SELECT id_role, nm_role, ds_role FROM t_role"
+			"SELECT id_role, nm_role, ds_role FROM role"
 		);
 	}
 
-	private function getRoleData(){
-		return Model::search(
-			"SELECT nm_role, ds_role, id_role FROM t_role"
+	public function getUserPermits($id_usuario){
+		$data_permit = Model::search("
+			SELECT DISTINCT
+				p.id_permissao AS profile_permission,
+				CASE
+					WHEN
+						pu.id_permissao IS NULL -- Se for NULL, a permissão de usuário corresponde a do perfil
+					THEN
+						p.id_permissao
+					ELSE 0 -- Se não, tem que ser necessariamente uma restrição: ic_concessao = N. Ver persistUserActions
+				END AS user_permission
+			FROM
+				permissao p
+					INNER JOIN
+				permissao_role pr ON p.id_permissao = pr.id_permissao
+					INNER JOIN
+				role_perfil rp ON rp.id_role = pr.id_role
+					INNER JOIN
+				usuario u ON u.id_usuario_perfil = rp.id_usuario_perfil
+					LEFT JOIN
+				permissao_usuario pu ON pu.id_permissao = p.id_permissao
+					AND u.id_usuario = pu.id_usuario
+			WHERE
+				u.id_usuario = :id_usuario
+		UNION 
+			SELECT 
+				0 AS profile_permission,
+				pu.id_permissao
+			FROM permissao_usuario pu
+			WHERE
+				pu.id_usuario = :id_usuario AND
+				pu.ic_concessao = 'S'
+		", [
+			':id_usuario' => $id_usuario
+		]);
+
+		$profile_permission = [];
+		$user_permission = [];
+
+		for ($i = 0; $i < sizeof($data_permit); $i++) { 
+			if($data_permit[$i]['user_permission'] != 0)
+				$user_permission[$data_permit[$i]['user_permission']] = true;
+
+			if($data_permit[$i]['profile_permission'] != 0)
+				$profile_permission[$data_permit[$i]['profile_permission']] = true;
+		}
+
+		return compact('user_permission', 'profile_permission');
+	}
+
+	/**
+	* @title Obter lista de permissões do perfil de um usuário
+	*/
+
+	private function getUserProfilePermits($id_usuario){
+		$data_permit = Model::search("
+			SELECT DISTINCT
+				p.id_permissao
+			FROM
+				permissao p
+					INNER JOIN
+				permissao_role pr ON p.id_permissao = pr.id_permissao
+					INNER JOIN
+				role_perfil rp ON rp.id_role = pr.id_role
+					INNER JOIN
+				usuario u ON u.id_usuario_perfil = rp.id_usuario_perfil
+			WHERE
+				u.id_usuario = ?
+		", [$id_usuario]);
+
+		return array_column($data_permit, 'id_permissao');
+	}
+
+	private function getRoleList(){
+		return array_column(Model::search(
+			"SELECT nm_role, id_role FROM role"
+		), 'nm_role', 'id_role');
+	}
+
+	public function getUserList(){
+		$pagdata = Filter::pagination( 
+			"SELECT 
+				up.nm_perfil,
+				u.id_usuario,
+				p.ds_nome
+			FROM usuario u
+			INNER JOIN pessoa p ON p.id_pessoa = u.id_pessoa
+			INNER JOIN usuario_perfil up ON up.id_usuario_perfil = u.id_usuario_perfil
+			"
 		);
+
+		Server::sendDataToClient($pagdata);
 	}
 
 	private function getProfileList(){
 		return array_column(Model::search(
-			"SELECT id_usuario_perfil, nm_usuario_perfil FROM t_usuario_perfil"
-		), 'nm_usuario_perfil', 'id_usuario_perfil');
+			"SELECT id_usuario_perfil, nm_perfil FROM usuario_perfil"
+		), 'nm_perfil', 'id_usuario_perfil');
 	}
 
 	/**
-	* @title Delegar permissões
+	* @title Delegar permissões a usuários
+	* @description Adiciona e remove permissões das dos usuários do sistema, sobrescrevendo as permissões atreladas ao seu perfil
+	*/
+
+	public function persistUserActions(){
+		extract(require_post('id_user_permissions', 'id_usuario'));//$id_user_permissions, $id_usuario
+		global $mypdo;
+
+		$id_user_permissions = array_keys($id_user_permissions);
+
+		//--------------------------------------------------------
+		//Dividindo as permissões removidas e as inseridas
+
+		$user_profile_permits = $this->getUserProfilePermits($id_usuario);
+
+		$remove_permissions = array_values(array_diff($user_profile_permits, $id_user_permissions));
+		$insert_permissions = array_values(array_diff($id_user_permissions, $user_profile_permits));
+
+		//--------------------------------------------------------
+		//Preparando dados para inserção
+
+		$data_insert = array_fill(0, sizeof($insert_permissions) + sizeof($remove_permissions), compact('id_usuario'));
+
+		for ($i = 0; $i < sizeof($remove_permissions); $i++) { 
+			$data_insert[$i]['id_permissao'] = $remove_permissions[$i];
+			$data_insert[$i]['ic_concessao'] = 'N';
+		}
+
+		for ($j = sizeof($remove_permissions); $j < sizeof($data_insert); $j++) { 
+			$data_insert[$j]['id_permissao'] = $insert_permissions[$j - $i];
+			$data_insert[$j]['ic_concessao'] = 'S';
+		}
+
+		//--------------------------------------------------------
+
+		return $mypdo->transaction(function() use($data_insert, $id_usuario){
+			//--------------------------------------------------------
+			// O primeiro passo é remover todas as permissões de usuário do usuário $id_usuario
+
+			$user_permission_model = new Model('permissao_usuario');
+
+			Model::exec(
+				"DELETE FROM permissao_usuario 
+				WHERE id_usuario = ?", [$id_usuario]
+			);
+
+			//--------------------------------------------------------
+			//Insert de todas as permissões, removidas e inseridas
+
+			return $user_permission_model->multInsert($data_insert);
+		});
+	}
+
+	/**
+	* @title Delegar permissões a roles
 	* @description Adiciona e remove permissões das roles existentes
-	* @restriction F
 	*/
 
 	public function persistActions(){
@@ -108,9 +204,9 @@ class S_Permit{
 		global $mypdo;
 
 		return $mypdo->transaction(function() use($id_role, $id_permissoes) {
-			Model::exec("DELETE FROM t_permissao_role WHERE id_role = ?", [$id_role]);
+			Model::exec("DELETE FROM permissao_role WHERE id_role = ?", [$id_role]);
 
-			$m_role_permission = new Model('t_permissao_role');
+			$m_role_permission = new Model('permissao_role');
 			$data_insert = [];
 
 			foreach ($id_permissoes as $id_permissao => $ic_concedida)
@@ -124,13 +220,12 @@ class S_Permit{
 	/**
 	* @title Delegar roles
 	* @description Adiciona e remove roles dos perfis existentes
-	* @restriction T
 	*/
 
 	public function persistRoles(){
 		extract(require_post('id_role_profile', 'id_usuario_perfil'));//$id_role_profile, $id_usuario_perfil
 
-		$m_profile_role = new Model('t_role_perfil');
+		$m_profile_role = new Model('role_perfil');
 		$data_insert = [];
 
 		foreach ($id_role_profile as $id_role => $ic_concedida)
@@ -143,12 +238,11 @@ class S_Permit{
 	/**
 	* @title Visualizar roles
 	* @description Apresenta as permissões atreladas a cada role existente
-	* @restriction A
 	*/
 
 	public function getRoleActions($id_role){
 		$role_actions = Model::search("
-			SELECT pr.id_permissao FROM t_permissao_role pr WHERE pr.id_role = ?
+			SELECT pr.id_permissao FROM permissao_role pr WHERE pr.id_role = ?
 		", [$id_role]);
 
 		if($role_actions)
@@ -168,8 +262,8 @@ class S_Permit{
 
 	public function getProfileRoles($id_usuario_perfil){
 		$profile_roles = Model::search(
-			"SELECT r.id_role FROM t_role r
-			INNER JOIN t_role_perfil rp ON r.id_role = rp.id_role
+			"SELECT r.id_role FROM role r
+			INNER JOIN role_perfil rp ON r.id_role = rp.id_role
 			WHERE rp.id_usuario_perfil = ?", [$id_usuario_perfil]
 		);
 
@@ -188,11 +282,10 @@ class S_Permit{
 
 	public function createRole(){
 		Validator::run([
-			'nm_role' => 'required',
-			'ds_role' => 'required'
+			'nm_role' => 'required'
 		]);
 
-		$m_role = new Model('t_role');
+		$m_role = new Model('role');
 		$data_insert = array_sub($_POST, ['nm_role', 'ds_role']);
 
 		return $m_role->insert($data_insert);
@@ -203,36 +296,33 @@ class S_Permit{
 	* @description Criação de novos perfis de acesso
 	*/
 
-	public function createProfile($nm_usuario_perfil = null){
-		if(!$nm_usuario_perfil)
-			extract(require_post('nm_usuario_perfil'));//$nm_usuario_perfil
+	public function createProfile($nm_perfil = null){
+		if(!$nm_perfil)
+			extract(require_post('nm_perfil'));//$nm_perfil
 
-		$m_profile = new Model('t_usuario_perfil');
-		return $m_profile->insert(compact('nm_usuario_perfil'));
+		$m_profile = new Model('usuario_perfil');
+		return $m_profile->insert(compact('nm_perfil'));
 	}
-
-	/**
-	* @title Criar perfis
-	* @description Criação de novos perfis de acesso
-	* @restriction T
-	*/
 
 	public function persistActionsDB(){
 		global $mypdo;
 
 		$local_access_options = $this->getLocalAccessOptions();
-		$permission_model = new Model('t_permissao', 'id_permissao');
+		$permission_model = new Model('permissao', 'id_permissao');
+
+		unset($local_access_options[__CLASS__][__METHOD__]);
 
 		return $mypdo->transaction(function() use($permission_model, $local_access_options){
 
-			foreach($local_access_options as $server => $actions)
+			foreach($local_access_options as $server => $actions){
 				foreach($actions as $action => $action_data) {
-					foreach ($action_data as $comment_index => $comment_value)
-						$data_insert[$this->comment_db_fields[$comment_index]['db_name']] = $comment_value;
-					
+					$data_insert['ds_titulo'] = $action_data['title'];
+					$data_insert['ds_permissao'] = $action_data['description'];
 					$data_insert['nm_permissao'] = mb_strtolower($server . '.' . $action);
+
 					$permission_model->insertUpdate($data_insert);
 				}
+			}
 
 			return true;
 		});
@@ -253,7 +343,7 @@ class S_Permit{
 		for ($i = 0; $i < sizeof($servers); $i++) { 
 			$reflect_class = new ReflectionClass($servers[$i]);
 			$methods = $reflect_class->getMethods(ReflectionMethod::IS_PUBLIC);
-			$server_name = Permit::getServerName($servers[$i]);
+			$server_name = substr($servers[$i], 2);
 
 			$comment = $reflect_class->getDocComment();
 			$permissions[$server_name][$server_name] = $this->treatComment($comment, $server_name);
@@ -265,7 +355,7 @@ class S_Permit{
 					continue;
 
 				$comment = (new ReflectionMethod($servers[$i] . '::' . $method))->getDocComment();
-				$permissions[$server_name][Permit::getActionName($method)] = $this->treatComment($comment, $method);
+				$permissions[$server_name][$method] = $this->treatComment($comment, $method);
 			}
 		}
 
@@ -273,20 +363,23 @@ class S_Permit{
 	}
 
 	private function treatComment($comment, $method){
-		$default_return = array_combine(array_keys($this->comment_db_fields), array_column($this->comment_db_fields, 'default_value'));
-		$default_return['title'] = $method;
+		$default_return = [
+			'title' => $method,
+			'description' => NULL
+		];
 
 		if(!$comment)
 			return $default_return;
 
-		preg_match_all('/\* +?@(' . implode('|', array_keys($this->comment_db_fields)) . ') (.+)/', $comment, $matches);
+		preg_match_all('/\* +?@(title|description) (.+)/', $comment, $matches);
 
 		if(empty($matches))
 			return $default_return;
 
-		array_shift($matches);//remove o índice 0 com os matches inteiros, deixando o índice 1(agora 0) com os @... e o ínidice 2(agora 1) com os valores dos respectivos @...
+		$return['title'] = isset($matches[2][0])? $matches[2][0]: $default_return['title'];
+		$return['description'] = isset($matches[2][1])? $matches[2][1]: $default_return['description'];
 
-		return array_combine($matches[0], $matches[1]) + $default_return;
+		return $return;
 	}
 
 }

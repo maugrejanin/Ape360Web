@@ -30,8 +30,8 @@ class S_RelParticipantes{
 				uc.ds_email_amigo, 
 				uc.ds_sexo_amigo, 
 				uc.ds_nascimento_amigo 
-			FROM t_usuario_cadastro uc 
-			INNER JOIN t_usuario u ON u.id_usuario = uc.id_usuario"
+			FROM usuario_cadastro uc 
+			INNER JOIN usuario u ON u.id_usuario = uc.id_usuario"
 		);
 
 		return compact('data_rel');
